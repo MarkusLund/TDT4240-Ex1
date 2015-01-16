@@ -1,7 +1,6 @@
 package com.example.ex1.androidhelicopterapplication.main.task3;
 
 
-import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -21,9 +20,6 @@ public class HelikopeterTask3 extends Sprite{
         height = image.getHeight();
         width = image.getWidth();
 
-        setPosition(350, 200);
-
-        this.addCollisionListener(GameLayerTask3);
     }
 
     @Override
@@ -37,5 +33,6 @@ public class HelikopeterTask3 extends Sprite{
     public float getWidth() {
         return width;
     }
+
 
 }
