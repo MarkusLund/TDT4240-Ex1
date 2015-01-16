@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 
 import com.example.ex1.androidhelicopterapplication.R;
 
+import java.util.ArrayList;
+
 import java.util.Random;
 
 import sheep.game.Layer;
