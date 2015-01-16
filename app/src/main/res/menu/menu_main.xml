@@ -4,5 +4,6 @@
         android:orderInCategory="1" android:showAsAction="never" />
     <item android:id="@+id/task2" android:title="@string/title_activity_task2_main"
         android:orderInCategory="2" android:showAsAction="never" />
-
+    <item android:id="@+id/task3" android:title="@string/title_activity_task3_main"
+        android:orderInCategory="2" android:showAsAction="never" />
 </menu>

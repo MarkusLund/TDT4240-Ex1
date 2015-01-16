@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.example.ex1.androidhelicopterapplication.R;
 import com.example.ex1.androidhelicopterapplication.main.task1.Task1;
 import com.example.ex1.androidhelicopterapplication.main.task2.Task2;
+import com.example.ex1.androidhelicopterapplication.main.task3.Task3;
 
 import sheep.game.Game;
 
@@ -55,6 +56,10 @@ public class Main extends Activity {
         else if (id == R.id.task2) {
             game.popState();
             game.pushState(new Task2());
+        }
+        else if (id == R.id.task3) {
+            game.popState();
+            game.pushState(new Task3());
         }
 
         return super.onOptionsItemSelected(item);
