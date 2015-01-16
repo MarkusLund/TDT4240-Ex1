@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 
 import com.example.ex1.androidhelicopterapplication.R;
 
-import java.util.ArrayList;
-
 import java.util.Random;
 
 import sheep.game.Layer;
@@ -23,9 +21,17 @@ public class GameLayerTask3 extends Layer {
 
     public GameLayerTask3() {
         super();
-        helikopeter1 = new HelikopeterTask3(new Image(R.drawable.heli2));
-        helikopeter2 = new HelikopeterTask3(new Image(R.drawable.heli2));
-        helikopeter3 = new HelikopeterTask3(new Image(R.drawable.heli2));
+
+        Image[] heli_ani = {
+                new Image(R.drawable.heli_animation_01),
+                new Image(R.drawable.heli_animation_02),
+                new Image(R.drawable.heli_animation_03),
+                new Image(R.drawable.heli_animation_04),
+        };
+
+        helikopeter1 = new HelikopeterTask3(heli_ani);
+        helikopeter2 = new HelikopeterTask3(heli_ani);
+        helikopeter3 = new HelikopeterTask3(heli_ani);
 
         helikopeter1.setSpeed(getRandSpeed());
         helikopeter2.setSpeed(getRandSpeed());
