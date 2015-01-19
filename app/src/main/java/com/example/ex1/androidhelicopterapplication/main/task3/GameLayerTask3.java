@@ -4,20 +4,18 @@ package com.example.ex1.androidhelicopterapplication.main.task3;
 import android.graphics.Canvas;
 
 import com.example.ex1.androidhelicopterapplication.R;
-
-import java.util.Random;
+import com.example.ex1.androidhelicopterapplication.main.Util;
 
 import sheep.game.Layer;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
-import sheep.math.Vector2;
 
 /**
  * Created by Lima on 13.01.2015.
  */
 public class GameLayerTask3 extends Layer {
     private HelikopeterTask3 helikopeter1, helikopeter2, helikopeter3;
-
+    private float dt;
 
     public GameLayerTask3() {
         super();
@@ -33,13 +31,14 @@ public class GameLayerTask3 extends Layer {
         helikopeter2 = new HelikopeterTask3(heli_ani);
         helikopeter3 = new HelikopeterTask3(heli_ani);
 
-        helikopeter1.setSpeed(getRandSpeed());
-        helikopeter2.setSpeed(getRandSpeed());
-        helikopeter3.setSpeed(getRandSpeed());
+        helikopeter1.setSpeed(Util.getRandSpeed(-4, 4));
+        helikopeter2.setSpeed(Util.getRandSpeed(-4,4));
+        helikopeter3.setSpeed(Util.getRandSpeed(-4,4));
 
         helikopeter1.setPosition(100,100);
         helikopeter2.setPosition(200,400);
         helikopeter3.setPosition(400,800);
+
     }
 
 
@@ -98,46 +97,32 @@ public class GameLayerTask3 extends Layer {
     }
 
 
-    private void moveHeli(HelikopeterTask3 helikopeter){
-        helikopeter.setPosition(helikopeter.getPosition().getX() + helikopeter.getSpeed().getX(),helikopeter.getPosition().getY() + helikopeter.getSpeed().getY());
-    }
+
 
     @Override
     public void update(float v) {
 
-        moveHeli(helikopeter1);
-        moveHeli(helikopeter2);
-        moveHeli(helikopeter3);
+        Util.moveSprite(helikopeter1);
+        Util.moveSprite(helikopeter2);
+        Util.moveSprite(helikopeter3);
 
-        if(helikopeter1.collides(helikopeter2)){
-            heliCollide(helikopeter1,helikopeter2);
-        }else if(helikopeter1.collides(helikopeter3)) {
-            heliCollide(helikopeter1, helikopeter3);
-        }else if(helikopeter2.collides(helikopeter3)){
-            heliCollide(helikopeter2,helikopeter3);
+        if(dt<0.05){
+
+            if(helikopeter1.collides(helikopeter2)){
+                heliCollide(helikopeter1,helikopeter2);
+            }else if(helikopeter1.collides(helikopeter3)) {
+                heliCollide(helikopeter1, helikopeter3);
+            }else if(helikopeter2.collides(helikopeter3)){
+                heliCollide(helikopeter2,helikopeter3);
+            }
+            dt=0;
         }
+        dt+=v;
 
         helikopeter1.update(v);
         helikopeter2.update(v);
         helikopeter3.update(v);
 
-    }
-
-
-    private static Vector2 getRandSpeed(){
-        return new Vector2(getRandInt(-4,4),getRandInt(-4,4));
-    }
-
-    private static int getRandInt(int min, int max){
-        // NOTE: Usually this should be a field rather than a method
-        // variable so that it is not re-seeded every call.
-        Random rand = new Random();
-
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-
-        return randomNum;
     }
 
 }

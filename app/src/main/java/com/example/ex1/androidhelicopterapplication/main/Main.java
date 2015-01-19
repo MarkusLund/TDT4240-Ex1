@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
-
 import com.example.ex1.androidhelicopterapplication.R;
 import com.example.ex1.androidhelicopterapplication.main.task1.Task1;
 import com.example.ex1.androidhelicopterapplication.main.task2.Task2;
@@ -40,7 +39,6 @@ public class Main extends Activity {
         setContentView(game);
 
         game.setOnTouchListener(state);
-
     }
 
 
@@ -70,6 +68,9 @@ public class Main extends Activity {
         else if (id == R.id.task3) {
             game.popState();
             game.pushState(new Task3());
+        }else if (id == R.id.pong) {
+            game.popState();
+            game.pushState(new Task4Pong());
         }
 
         return super.onOptionsItemSelected(item);
