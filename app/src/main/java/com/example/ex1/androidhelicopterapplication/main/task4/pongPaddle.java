@@ -1,5 +1,9 @@
 package com.example.ex1.androidhelicopterapplication.main.task4;
 
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -12,10 +16,10 @@ public class PongPaddle extends Sprite {
 
         super(image);
 
-        if (i == 1){
-            setPosition(100,250);
-        }else{
-            setPosition(900,250);
+        if (i == 1) {
+            setPosition(100, 250);
+        } else {
+            setPosition(900, 250);
         }
 
     }
