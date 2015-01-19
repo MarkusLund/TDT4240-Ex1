@@ -8,7 +8,7 @@ import sheep.math.Vector2;
 /**
  * Created by Lima on 19.01.2015.
  */
-public abstract class Util {
+public final class Util {
 
     public static Vector2 getRandSpeed(int min, int max){
         return new Vector2(getRandInt(min,max),getRandInt(min,max));
