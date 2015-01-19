@@ -21,8 +21,8 @@ public class GameLayerPong extends Layer{
     private PongBall ball;
     private Boolean init;
     private Image pong_paddle;
-    private int canvasWidth;
-    private int canvasHight;
+    private int canvasWidth, canvasHeight;
+    private float dt;
 
 
     public GameLayerPong() {
@@ -34,7 +34,7 @@ public class GameLayerPong extends Layer{
         ball = new PongBall();
         player1.setSpeed(0,0);
         player2.setSpeed(0,0);
-        ball.setSpeed(Util.getRandSpeed(-2,2));
+        ball.setSpeed(2,1);
 
     }
 
@@ -45,6 +45,19 @@ public class GameLayerPong extends Layer{
         Util.moveSprite(player2);
         Util.moveSprite(ball);
 
+        if ( dt>0.05 && (ball.collides(player1) || ball.collides(player2)) ){
+            ball.setSpeed(-ball.getSpeed().getX(),ball.getSpeed().getY());
+            dt=0;
+        }
+
+        if( dt>0.05 && (ball.getPosition().getY()<(0+ball.getHeight()/2) || ball.getPosition().getY()>canvasHeight-ball.getHeight()/2) ){
+            ball.setSpeed(ball.getSpeed().getX(),-ball.getSpeed().getY());
+            dt=0;
+        }
+
+
+        dt+=v;
+        Log.i("Update",String.valueOf(v));
         player1.update(v);
         player2.update(v);
         ball.update(v);
@@ -55,16 +68,17 @@ public class GameLayerPong extends Layer{
     public void draw(Canvas canvas, BoundingBox boundingBox) {
         player1.draw(canvas);
         player2.draw(canvas);
+        ball.draw(canvas);
 
         if (init){
             Log.i("init", "Init is run");
             canvasWidth = canvas.getWidth();
-            canvasHight = canvas.getHeight();
-            player1.setPosition(50, canvasHight/2);
-            player2.setPosition(canvasWidth-50, canvasHight/2);
+            canvasHeight = canvas.getHeight();
+            player1.setPosition(50, canvasHeight /2);
+            player2.setPosition(canvasWidth-50, canvasHeight /2);
+            ball.setPosition(canvasWidth/2,canvasHeight/2);
             init = false;
         }
-
 
     }
 
@@ -76,16 +90,16 @@ public class GameLayerPong extends Layer{
         switch (event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
                 Log.i("Action Down", "Action Down");
-                if(event.getY()<canvasHight/2 && event.getX()<canvasWidth/2){
+                if(event.getY()< canvasHeight /2 && event.getX()<canvasWidth/2){
                     player1.setSpeed(0, -4);
                     p1 = true;
-                }if(event.getY()>canvasHight/2 && event.getX()<canvasWidth/2){
+                }if(event.getY()> canvasHeight /2 && event.getX()<canvasWidth/2){
                     player1.setSpeed(0, 4);
                     p1 = true;
-                }if(event.getY()<canvasHight/2 && event.getX()>canvasWidth/2){
+                }if(event.getY()< canvasHeight /2 && event.getX()>canvasWidth/2){
                     player2.setSpeed(0, -4);
                     p2 = true;
-                }if(event.getY()>canvasHight/2 && event.getX()>canvasWidth/2){
+                }if(event.getY()> canvasHeight /2 && event.getX()>canvasWidth/2){
                     player2.setSpeed(0, 4);
                     p2 = true;
                 }
@@ -93,16 +107,16 @@ public class GameLayerPong extends Layer{
             case MotionEvent.ACTION_POINTER_DOWN:
                 Log.i("Action Pointer Down", "Action Pointer Down");
                 int index = event.getActionIndex();
-                if(event.getY(index)<canvasHight/2 && event.getX(index)<canvasWidth/2){
+                if(event.getY(index)< canvasHeight /2 && event.getX(index)<canvasWidth/2){
                     player1.setSpeed(0, -4);
                     p1 = true;
-                }if(event.getY(index)>canvasHight/2 && event.getX(index)<canvasWidth/2){
+                }if(event.getY(index)> canvasHeight /2 && event.getX(index)<canvasWidth/2){
                     player1.setSpeed(0, 4);
                     p1 = true;
-                }if(event.getY(index)<canvasHight/2 && event.getX(index)>canvasWidth/2){
+                }if(event.getY(index)< canvasHeight /2 && event.getX(index)>canvasWidth/2){
                     player2.setSpeed(0, -4);
                     p2 = true;
-                }if(event.getY(index)>canvasHight/2 && event.getX(index)>canvasWidth/2){
+                }if(event.getY(index)> canvasHeight /2 && event.getX(index)>canvasWidth/2){
                     player2.setSpeed(0, 4);
                     p2 = true;
                 }

@@ -15,7 +15,7 @@ import sheep.math.BoundingBox;
  */
 public class GameLayerTask3 extends Layer {
     private HelikopeterTask3 helikopeter1, helikopeter2, helikopeter3;
-
+    private float dt;
 
     public GameLayerTask3() {
         super();
@@ -38,6 +38,7 @@ public class GameLayerTask3 extends Layer {
         helikopeter1.setPosition(100,100);
         helikopeter2.setPosition(200,400);
         helikopeter3.setPosition(400,800);
+
     }
 
 
@@ -105,13 +106,18 @@ public class GameLayerTask3 extends Layer {
         Util.moveSprite(helikopeter2);
         Util.moveSprite(helikopeter3);
 
-        if(helikopeter1.collides(helikopeter2)){
-            heliCollide(helikopeter1,helikopeter2);
-        }else if(helikopeter1.collides(helikopeter3)) {
-            heliCollide(helikopeter1, helikopeter3);
-        }else if(helikopeter2.collides(helikopeter3)){
-            heliCollide(helikopeter2,helikopeter3);
+        if(dt<0.05){
+
+            if(helikopeter1.collides(helikopeter2)){
+                heliCollide(helikopeter1,helikopeter2);
+            }else if(helikopeter1.collides(helikopeter3)) {
+                heliCollide(helikopeter1, helikopeter3);
+            }else if(helikopeter2.collides(helikopeter3)){
+                heliCollide(helikopeter2,helikopeter3);
+            }
+            dt=0;
         }
+        dt+=v;
 
         helikopeter1.update(v);
         helikopeter2.update(v);
