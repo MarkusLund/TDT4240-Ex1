@@ -4,6 +4,7 @@ package com.example.ex1.androidhelicopterapplication.main.task3;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
+import com.example.ex1.androidhelicopterapplication.main.task1.GameLayer;
 
 import sheep.game.State;
 import sheep.game.World;

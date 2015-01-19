@@ -1,13 +1,13 @@
 package com.example.ex1.androidhelicopterapplication.main.task3;
 
+
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
 /**
  * Created by Lima on 13.01.2015.
  */
-
-public class HelikopeterTask3 extends Sprite{
+public class HelikopeterTask3 extends Sprite {
 
     private float height, width;
     private float timeLeft;
@@ -17,7 +17,6 @@ public class HelikopeterTask3 extends Sprite{
     private Image[] heliImages;
 
     public HelikopeterTask3(Image[] heliImages) {
-
         super(heliImages[1]);
 
         height = heliImages[1].getHeight();
@@ -56,4 +55,6 @@ public class HelikopeterTask3 extends Sprite{
     public float getWidth() {
         return width;
     }
+
+
 }
