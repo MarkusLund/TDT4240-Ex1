@@ -17,8 +17,9 @@ import sheep.math.BoundingBox;
 public class GameLayerPong extends Layer{
 
     private PongPaddle player1, player2;
+    private PongBall ball;
     private Boolean init;
-    private Image pong_paddle;
+    private Image pong_paddle, pong_ball;
     private int canvasWidth;
     private int canvasHight;
 
@@ -26,11 +27,15 @@ public class GameLayerPong extends Layer{
     public GameLayerPong() {
         init = true;
         pong_paddle = new Image(R.drawable.pong_paddle);
+        pong_ball = new Image(R.drawable.pong_ball);
+
 
         player1 = new PongPaddle(pong_paddle, 1);
         player2 = new PongPaddle(pong_paddle, 2);
+        ball = new PongBall(pong_ball);
         player1.setSpeed(0,0);
         player2.setSpeed(0,0);
+        ball.setSpeed();
 
     }
 
