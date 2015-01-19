@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.example.ex1.androidhelicopterapplication.R;
 import com.example.ex1.androidhelicopterapplication.main.task1.Task1;
@@ -24,6 +25,7 @@ public class Main extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
         super.onCreate(savedInstanceState);

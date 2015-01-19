@@ -15,7 +15,7 @@ import sheep.math.BoundingBox;
 /**
  * Created by markuslund92 on 16.01.15.
  */
-public class GameLayerPong extends Layer{
+public class GameLayerPong extends Layer {
 
     private PongPaddle player1, player2;
     private PongBall ball;
@@ -23,7 +23,6 @@ public class GameLayerPong extends Layer{
     private Image pong_paddle;
     private int canvasWidth, canvasHeight;
     private float dt;
-
 
     public GameLayerPong() {
         init = true;
@@ -70,7 +69,7 @@ public class GameLayerPong extends Layer{
         player2.draw(canvas);
         ball.draw(canvas);
 
-        if (init){
+        if (init) {
             Log.i("init", "Init is run");
             canvasWidth = canvas.getWidth();
             canvasHeight = canvas.getHeight();
@@ -83,72 +82,32 @@ public class GameLayerPong extends Layer{
     }
 
     public void onTouch(View v, MotionEvent event) {
+        int eventAction = event.getActionMasked();
 
-        Boolean p1 = false, p2 = false;
+        int num = event.getPointerCount();
 
-        //Log.i("Touch in GameLayer", event.toString());
-        switch (event.getActionMasked()){
-            case MotionEvent.ACTION_DOWN:
-                Log.i("Action Down", "Action Down");
-                if(event.getY()< canvasHeight /2 && event.getX()<canvasWidth/2){
-                    player1.setSpeed(0, -4);
-                    p1 = true;
-                }if(event.getY()> canvasHeight /2 && event.getX()<canvasWidth/2){
-                    player1.setSpeed(0, 4);
-                    p1 = true;
-                }if(event.getY()< canvasHeight /2 && event.getX()>canvasWidth/2){
-                    player2.setSpeed(0, -4);
-                    p2 = true;
-                }if(event.getY()> canvasHeight /2 && event.getX()>canvasWidth/2){
-                    player2.setSpeed(0, 4);
-                    p2 = true;
-                }
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                Log.i("Action Pointer Down", "Action Pointer Down");
-                int index = event.getActionIndex();
-                if(event.getY(index)< canvasHeight /2 && event.getX(index)<canvasWidth/2){
-                    player1.setSpeed(0, -4);
-                    p1 = true;
-                }if(event.getY(index)> canvasHeight /2 && event.getX(index)<canvasWidth/2){
-                    player1.setSpeed(0, 4);
-                    p1 = true;
-                }if(event.getY(index)< canvasHeight /2 && event.getX(index)>canvasWidth/2){
-                    player2.setSpeed(0, -4);
-                    p2 = true;
-                }if(event.getY(index)> canvasHeight /2 && event.getX(index)>canvasWidth/2){
-                    player2.setSpeed(0, 4);
-                    p2 = true;
-                }
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                Log.i("Action Pointer UP", "Action Pointer UP");
-                if (p1){
-                    player1.setSpeed(0,0);
-                    p1 = false;
+        // For every touch
+        for (int a = 0; a < num; a++) {
 
-                }else {
-                    player2.setSpeed(0, 0);
-                    p2 = false;
-                }
-                break;
+            int X = (int) event.getX(event.getPointerId(a));
+            int Y = (int) event.getY(event.getPointerId(a));
 
-            case MotionEvent.ACTION_UP:
-                Log.i("Action UP", "Action UP");
-                if (p1){
-                    player1.setSpeed(0,0);
-                    p1 = false;
+            switch (eventAction) {
+                case MotionEvent.ACTION_MOVE:
+                    //Move player1
+                    if (X < canvasWidth / 2) {
+                        player1.setPosition(player1.getPosition().getX(),Y);
+                    }
 
-                }else {
-                    player2.setSpeed(0, 0);
-                    p2 = false;
-                }
-                break;
-            default:
-                Log.i("Nothing!", event.toString());
-                break;
+                    //Move player2
+                    if (X > canvasWidth / 2) {
+                        player2.setPosition(player2.getPosition().getX(),Y);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
-
-
     }
 }
