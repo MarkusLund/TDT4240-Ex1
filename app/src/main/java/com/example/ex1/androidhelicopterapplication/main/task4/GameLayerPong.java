@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.ex1.androidhelicopterapplication.R;
+import com.example.ex1.androidhelicopterapplication.main.Util;
 
 import sheep.game.Layer;
 import sheep.graphics.Image;
@@ -19,7 +20,7 @@ public class GameLayerPong extends Layer{
     private PongPaddle player1, player2;
     private PongBall ball;
     private Boolean init;
-    private Image pong_paddle, pong_ball;
+    private Image pong_paddle;
     private int canvasWidth;
     private int canvasHight;
 
@@ -27,23 +28,26 @@ public class GameLayerPong extends Layer{
     public GameLayerPong() {
         init = true;
         pong_paddle = new Image(R.drawable.pong_paddle);
-        pong_ball = new Image(R.drawable.pong_ball);
-
 
         player1 = new PongPaddle(pong_paddle, 1);
         player2 = new PongPaddle(pong_paddle, 2);
-        ball = new PongBall(pong_ball);
+        ball = new PongBall();
         player1.setSpeed(0,0);
         player2.setSpeed(0,0);
-        ball.setSpeed();
+        ball.setSpeed(Util.getRandSpeed(-2,2));
 
     }
 
     @Override
     public void update(float v) {
 
+        Util.moveSprite(player1);
+        Util.moveSprite(player2);
+        Util.moveSprite(ball);
+
         player1.update(v);
         player2.update(v);
+        ball.update(v);
 
     }
 
@@ -61,8 +65,6 @@ public class GameLayerPong extends Layer{
             init = false;
         }
 
-        player1.setPosition(player1.getPosition().getX() + player1.getSpeed().getX(),player1.getPosition().getY() + player1.getSpeed().getY());
-        player2.setPosition(player2.getPosition().getX() + player2.getSpeed().getX(),player2.getPosition().getY() + player2.getSpeed().getY());
 
     }
 
