@@ -21,7 +21,6 @@ public class Helikopeter extends Sprite {
 
     @Override
     public void update(float dt) {
-
         super.update(dt);
     }
     public float getHeight() {
