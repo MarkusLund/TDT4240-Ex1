@@ -2,8 +2,9 @@
 <resources>
 
     <string name="app_name">Øving 1</string>
-    <string name="title_activity_task2_main">Task2</string>
     <string name="title_activity_task1_main">Task1</string>
+    <string name="title_activity_task2_main">Task2</string>
     <string name="title_activity_task3_main">Task3</string>
+    <string name="title_activity_pong_main">Pong</string>
 
 </resources>
