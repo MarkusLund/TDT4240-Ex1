@@ -9,7 +9,6 @@ import com.example.ex1.androidhelicopterapplication.R;
 
 import sheep.game.Layer;
 import sheep.graphics.Image;
-import sheep.input.TouchListener;
 import sheep.math.BoundingBox;
 
 /**
@@ -17,14 +16,16 @@ import sheep.math.BoundingBox;
  */
 public class GameLayerPong extends Layer{
 
-    PongPaddle player1, player2;
-    Boolean init = true;
-    Image pong_paddle = new Image(R.drawable.pong_paddle);
+    private PongPaddle player1, player2;
+    private Boolean init;
+    private Image pong_paddle;
     private int canvasWidth;
     private int canvasHight;
 
 
     public GameLayerPong() {
+        init = true;
+        pong_paddle = new Image(R.drawable.pong_paddle);
 
         player1 = new PongPaddle(pong_paddle, 1);
         player2 = new PongPaddle(pong_paddle, 2);
