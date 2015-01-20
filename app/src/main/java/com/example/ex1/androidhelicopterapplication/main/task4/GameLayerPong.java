@@ -1,6 +1,7 @@
 package com.example.ex1.androidhelicopterapplication.main.task4;
 
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.example.ex1.androidhelicopterapplication.R;
 import com.example.ex1.androidhelicopterapplication.main.Util;
 
 import sheep.game.Layer;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 
@@ -23,11 +25,13 @@ public class GameLayerPong extends Layer {
     private Image pong_paddle;
     private int canvasWidth, canvasHeight;
     private float dt;
+    private Font scoreFont;
 
     public GameLayerPong() {
         init = true;
         pong_paddle = new Image(R.drawable.pong_paddle);
 
+        scoreFont = new Font(255, 255, 255, 50, Typeface.SERIF, Typeface.NORMAL);
         player1 = new PongPaddle(pong_paddle, 1);
         player2 = new PongPaddle(pong_paddle, 2);
         ball = new PongBall();
@@ -54,9 +58,16 @@ public class GameLayerPong extends Layer {
             dt=0;
         }
 
+        if( ball.getPosition().getX()<0){
+            Task4Pong.addP2Score();
+            init=true;
+        }else if(ball.getPosition().getX()>canvasWidth){
+            Task4Pong.addP1Score();
+            init=true;
+        }
 
         dt+=v;
-        Log.i("Update",String.valueOf(v));
+        //Log.i("Update",String.valueOf(v));
         player1.update(v);
         player2.update(v);
         ball.update(v);
@@ -65,17 +76,21 @@ public class GameLayerPong extends Layer {
 
     @Override
     public void draw(Canvas canvas, BoundingBox boundingBox) {
+        canvas.drawText(String.valueOf(Task4Pong.getP1Score()),-30+canvasWidth/2,100,scoreFont);
+        canvas.drawText(String.valueOf(Task4Pong.getP2Score()),30+canvasWidth/2,100,scoreFont);
         player1.draw(canvas);
         player2.draw(canvas);
         ball.draw(canvas);
 
         if (init) {
             Log.i("init", "Init is run");
+            Log.i("Score",String.valueOf(Task4Pong.getP1Score()));
             canvasWidth = canvas.getWidth();
             canvasHeight = canvas.getHeight();
             player1.setPosition(50, canvasHeight /2);
             player2.setPosition(canvasWidth-50, canvasHeight /2);
             ball.setPosition(canvasWidth/2,canvasHeight/2);
+            ball.setSpeed(-ball.getSpeed().getX(),Util.getRandSpeed(1,5).getY());
             init = false;
         }
 
