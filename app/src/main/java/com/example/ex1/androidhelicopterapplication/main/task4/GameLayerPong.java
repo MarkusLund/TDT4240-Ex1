@@ -31,7 +31,7 @@ public class GameLayerPong extends Layer {
         init = true;
         pong_paddle = new Image(R.drawable.pong_paddle);
 
-        scoreFont = new Font(255, 255, 255, 50, Typeface.SERIF, Typeface.NORMAL);
+        //scoreFont = new Font(255, 255, 255, 50, Typeface.createFromAsset(), Typeface.NORMAL);
         player1 = new PongPaddle(pong_paddle, 1);
         player2 = new PongPaddle(pong_paddle, 2);
         ball = new PongBall();
@@ -112,7 +112,7 @@ public class GameLayerPong extends Layer {
             player1.setPosition(50, canvasHeight /2);
             player2.setPosition(canvasWidth-50, canvasHeight /2);
             ball.setPosition(canvasWidth/2,canvasHeight/2);
-            ball.setSpeed(-ball.getSpeed().getX(),Util.getRandSpeed(1,5).getY());
+            ball.setSpeed(-ball.getSpeed().getX(), Util.getRandSpeed(1, 5).getY());
             init = false;
         }
 
