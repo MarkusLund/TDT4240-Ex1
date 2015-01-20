@@ -1,7 +1,6 @@
 package com.example.ex1.androidhelicopterapplication.main.task4;
 
 import android.graphics.Canvas;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,6 +9,7 @@ import com.example.ex1.androidhelicopterapplication.R;
 import com.example.ex1.androidhelicopterapplication.main.Util;
 
 import sheep.game.Layer;
+import sheep.graphics.Color;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
@@ -53,7 +53,7 @@ public class GameLayerPong extends Layer {
             dt=0;
         }
 
-        if( dt>0.05 && (ball.getPosition().getY()<(0+ball.getHeight()/2) || ball.getPosition().getY()>canvasHeight-ball.getHeight()/2) ){
+        if( dt>0.05 && (ball.getPosition().getY()<(10+ball.getHeight()/2) || ball.getPosition().getY()>canvasHeight-10-ball.getHeight()/2) ){
             ball.setSpeed(ball.getSpeed().getX(),-ball.getSpeed().getY());
             dt=0;
         }
@@ -81,6 +81,28 @@ public class GameLayerPong extends Layer {
         player1.draw(canvas);
         player2.draw(canvas);
         ball.draw(canvas);
+
+
+
+
+        //DRAWS GAME AREA
+
+        //Upper line
+        canvas.drawRect(0,0,canvasWidth,10, Color.WHITE);
+
+        //Right Line
+        canvas.drawRect(canvasWidth-10,0,canvasWidth,canvasHeight, Color.WHITE);
+
+        //Lower Line
+        canvas.drawRect(0,canvasHeight-10,canvasWidth,canvasHeight, Color.WHITE);
+
+        //Left Line
+        canvas.drawRect(0,0,10,canvasHeight, Color.WHITE);
+
+        //Midfield
+        for (int i = 15; i < canvasHeight; i = i + 30) {
+            canvas.drawRect(canvasWidth / 2 - 3, i, canvasWidth / 2 + 3, i+10, Color.WHITE);
+        }
 
         if (init) {
             Log.i("init", "Init is run");
