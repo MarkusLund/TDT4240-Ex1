@@ -57,9 +57,9 @@ public class GameLayerTask3 extends Layer {
     private void heliCollide(HelikopeterTask3 h1, HelikopeterTask3 h2){
         if(h1.getX() - h2.getX() < 0){
             if(h1.getY()>h2.getY()){
-                h1.setPosition(h1.getPosition().getX(),h1.getPosition().getY()-5);
+                h1.setPosition(h1.getPosition().getX(),h1.getPosition().getY());
             }else{
-                h1.setPosition(h1.getPosition().getX(),h1.getPosition().getY()+5);
+                h1.setPosition(h1.getPosition().getX(),h1.getPosition().getY());
             }
             h1.setYSpeed(-h1.getSpeed().getY());
             h2.setYSpeed(-h2.getSpeed().getY());
@@ -67,11 +67,11 @@ public class GameLayerTask3 extends Layer {
             if (h1.getX() > h2.getX()) {
                 h1.setXSpeed(-h1.getSpeed().getX());
                 h1.setScale(1, 1);
-                h1.setPosition(h1.getPosition().getX() + h1.getWidth() + 1, h1.getPosition().getY());
+                h1.setPosition(h1.getPosition().getX() + h1.getWidth(), h1.getPosition().getY());
             } else {
                 h2.setXSpeed(-h2.getSpeed().getX());
                 h2.setScale(-1, 1);
-                h2.setPosition(h2.getPosition().getX() - h2.getWidth() - 1, h2.getPosition().getY());
+                h2.setPosition(h2.getPosition().getX() - h2.getWidth(), h2.getPosition().getY());
             }
         }
     }
@@ -106,7 +106,7 @@ public class GameLayerTask3 extends Layer {
         Util.moveSprite(helikopeter2);
         Util.moveSprite(helikopeter3);
 
-        if(dt<0.05){
+        if(dt>0.1){
 
             if(helikopeter1.collides(helikopeter2)){
                 heliCollide(helikopeter1,helikopeter2);
