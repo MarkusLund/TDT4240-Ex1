@@ -16,8 +16,6 @@ import com.example.ex1.androidhelicopterapplication.main.task4.Task4Pong;
 import sheep.game.Game;
 
 
-
-
 public class Main extends Activity {
 
     public static int BACKGROUND_COLOR = Color.rgb(254, 0, 254);
