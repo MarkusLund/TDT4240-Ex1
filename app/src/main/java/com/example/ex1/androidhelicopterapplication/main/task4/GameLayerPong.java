@@ -26,17 +26,17 @@ public class GameLayerPong extends Layer {
     private Image pong_paddle;
     private int canvasWidth, canvasHeight;
     private float dt;
+    private Font scoreFont;
 
     public GameLayerPong() {
         init = true;
         pong_paddle = new Image(R.drawable.pong_paddle);
 
+        scoreFont = new Font(255, 255, 255, 50, Typeface.MONOSPACE, Typeface.NORMAL);
         player1 = new PongPaddle(pong_paddle, 1);
         player2 = new PongPaddle(pong_paddle, 2);
         ball = new PongBall();
-        player1.setSpeed(0,0);
-        player2.setSpeed(0,0);
-        ball.setSpeed(2,1);
+        ball.setSpeed(Util.getRandSpeed(-4,4));
 
     }
 
@@ -57,6 +57,13 @@ public class GameLayerPong extends Layer {
             dt=0;
         }
 
+        if( ball.getPosition().getX()<0){
+            Task4Pong.addP2Score();
+            init=true;
+        }else if(ball.getPosition().getX()>canvasWidth){
+            Task4Pong.addP1Score();
+            init=true;
+        }
 
         dt+=v;
         //Log.i("Update",String.valueOf(v));
@@ -68,6 +75,8 @@ public class GameLayerPong extends Layer {
 
     @Override
     public void draw(Canvas canvas, BoundingBox boundingBox) {
+        canvas.drawText(String.valueOf(Task4Pong.getP1Score()),-80+canvasWidth/2,100,scoreFont);
+        canvas.drawText(String.valueOf(Task4Pong.getP2Score()),30+canvasWidth/2,100,scoreFont);
         player1.draw(canvas);
         player2.draw(canvas);
         ball.draw(canvas);
@@ -96,11 +105,16 @@ public class GameLayerPong extends Layer {
 
         if (init) {
             Log.i("init", "Init is run");
+            Log.i("Score",String.valueOf(Task4Pong.getP1Score()));
             canvasWidth = canvas.getWidth();
             canvasHeight = canvas.getHeight();
             player1.setPosition(50, canvasHeight /2);
             player2.setPosition(canvasWidth-50, canvasHeight /2);
             ball.setPosition(canvasWidth/2,canvasHeight/2);
+            while(ball.getSpeed().getX()==0){ //do not allow ball to go straight up and down
+                ball.setSpeed(-ball.getSpeed().getX(), Util.getRandSpeed(1, 5).getY());
+            }
+
             init = false;
         }
 
