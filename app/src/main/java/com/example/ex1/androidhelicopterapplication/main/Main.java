@@ -11,6 +11,7 @@ import com.example.ex1.androidhelicopterapplication.R;
 import com.example.ex1.androidhelicopterapplication.main.task1.Task1;
 import com.example.ex1.androidhelicopterapplication.main.task2.Task2;
 import com.example.ex1.androidhelicopterapplication.main.task3.Task3;
+import com.example.ex1.androidhelicopterapplication.main.task4.GameStatePong;
 import com.example.ex1.androidhelicopterapplication.main.task4.Task4Pong;
 
 import sheep.game.Game;
@@ -30,7 +31,11 @@ public class Main extends Activity {
         // Create the game.
         game = new Game(this, null);
         // Push the main state.
-        game.pushState(new Task1());
+        //game.pushState(new Task1());
+
+        GameStatePong state = new GameStatePong();
+        game.pushState(state);
+        game.setOnTouchListener(state);
 
         // View the game.
         setContentView(game);
