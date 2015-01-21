@@ -18,6 +18,7 @@ public class PongBall extends Sprite{
    public PongBall() {
        super(img);
        ourInstance = this;
+       this.setPosition(100,100);
 
     }
 
