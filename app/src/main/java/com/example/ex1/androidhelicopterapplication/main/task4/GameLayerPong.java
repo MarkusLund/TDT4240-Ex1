@@ -26,7 +26,7 @@ public class GameLayerPong extends Layer {
     private Boolean init;
     private Image pong_paddle;
     private int canvasWidth, canvasHeight;
-    private float dt;
+    private float dt, ySpeed;
     private Font scoreFont;
     private static int p1Score, p2Score, winningScore;
     private boolean gameWon;
@@ -45,8 +45,9 @@ public class GameLayerPong extends Layer {
         player1 = new PongPaddle(pong_paddle, 1);
         player2 = new PongPaddle(pong_paddle, 2);
         ball = new PongBall();
-        ball.setSpeed(0,0);
+        ball.setSpeed(3,0);
         ball.setPosition(50,50);
+        ySpeed = Util.getRandSpeed(1, 3).getY();
 
     }
 
@@ -54,55 +55,55 @@ public class GameLayerPong extends Layer {
     @Override
     public void update(float v) {
 
-        if (gameWon){
-            Log.i("Update","won");
-        }else{
+        if (!gameWon){
             Util.moveSprite(player1);
             Util.moveSprite(player2);
             Util.moveSprite(ball);
 
-            if ( dt>0.05 ){
 
+            if ( dt>0.05 ){
                 if(ball.collides(player1) ){
                     float diff = player1.getPosition().getY()-ball.getPosition().getY();
                     if(diff>10){
-                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+diff/2-10);
+                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+(diff/5)-10);
                     }else if(diff<-10){
-                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+diff/2+10);
+                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+(diff/5)+10);
                     }
-
+                    if (ball.getSpeed().getX() > 0){
+                        ball.setSpeed(ball.getSpeed().getX() + 1, ball.getSpeed().getY());
+                    }else{
+                        ball.setSpeed(ball.getSpeed().getX() - 1, ball.getSpeed().getY());
+                    }
+                    ball.setSpeed(-ball.getSpeed().getX(),ball.getSpeed().getY());
+                    dt=0;
                 }else if(ball.collides(player2)){
                     float diff = player2.getPosition().getY()-ball.getPosition().getY();
                     if(diff>10){
-                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+diff/2-10);
+                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+(diff/5)-10);
                     }else if(diff<-10){
-                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+diff/2+10);
+                        ball.setSpeed(ball.getSpeed().getX(),ball.getSpeed().getY()+(diff/5)+10);
                     }
+                    if (ball.getSpeed().getX() > 0){
+                        ball.setSpeed(ball.getSpeed().getX() + 1, ball.getSpeed().getY());
+                    }else{
+                        ball.setSpeed(ball.getSpeed().getX() - 1, ball.getSpeed().getY());
+                    }
+                    ball.setSpeed(-ball.getSpeed().getX(),ball.getSpeed().getY());
+                    dt=0;
                 }
 
-                if (ball.getSpeed().getX() > 0){
-                    ball.setSpeed(ball.getSpeed().getX() + 1, ball.getSpeed().getY());
-                }else{
-                    ball.setSpeed(ball.getSpeed().getX() - 1, ball.getSpeed().getY());
+                //Bounce roof/floor
+                if(ball.getPosition().getY()<(10+ball.getHeight()/2) || ball.getPosition().getY()>canvasHeight-10-ball.getHeight()/2){
+                    ball.setSpeed(ball.getSpeed().getX(),-ball.getSpeed().getY());
+                    dt=0;
                 }
-                ball.setSpeed(-ball.getSpeed().getX(),ball.getSpeed().getY());
-                dt=0;
             }
-
-            //Bounce roof/floor
-            if( dt>0.05 && (ball.getPosition().getY()<(10+ball.getHeight()/2) || ball.getPosition().getY()>canvasHeight-10-ball.getHeight()/2) ){
-                ball.setSpeed(ball.getSpeed().getX(),-ball.getSpeed().getY());
-                dt=0;
-            }
-
             //check if someone has scored
             if( ball.getPosition().getX()<0){
                 addP2Score();
-                ball.setSpeed(-ball.getSpeed().getX()*(3/4), Util.getRandSpeed(1, 5).getY());
                 resetBall();
             }else if(ball.getPosition().getX()>canvasWidth){
                 addP1Score();
-                ball.setSpeed(-ball.getSpeed().getX()*(3/4), Util.getRandSpeed(1, 5).getY());
                 resetBall();
             }
 
@@ -121,11 +122,14 @@ public class GameLayerPong extends Layer {
     }
 
     private void resetBall() {
-        init = true;
         ball.setPosition(canvasWidth / 2, canvasHeight / 2);
-        while (ball.getSpeed().getX() == 0) { //do not allow ball to go straight up and down
-            ball.setSpeed(-ball.getSpeed().getX(), Util.getRandSpeed(1, 5).getY());
+        float xSpeed;
+        if(java.lang.Math.abs(-ball.getSpeed().getX())<3){
+            xSpeed = -ball.getSpeed().getX();
+        }else{
+            xSpeed = -ball.getSpeed().getX()/2;
         }
+        ball.setSpeed(xSpeed, Util.getRandInt(-3, 3));
     }
 
     private void addP1Score() {
@@ -185,7 +189,7 @@ public class GameLayerPong extends Layer {
             ball.setPosition(canvasWidth/2, canvasHeight/2);
             p1Score = 0;
             p2Score = 0;
-
+            ySpeed = Util.getRandSpeed(1, 5).getY();
             init = false;
         }
 
