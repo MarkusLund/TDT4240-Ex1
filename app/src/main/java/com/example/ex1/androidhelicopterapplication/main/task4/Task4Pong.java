@@ -2,7 +2,6 @@ package com.example.ex1.androidhelicopterapplication.main.task4;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
