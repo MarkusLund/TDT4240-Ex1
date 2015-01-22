@@ -18,7 +18,7 @@ public final class Util {
         Random rand = new Random();
 
         int randomNum = rand.nextInt((max - min) + 1) + min;
-
+        rand = null;
         return randomNum;
     }
     

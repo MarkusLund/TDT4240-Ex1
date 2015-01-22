@@ -1,13 +1,15 @@
 package com.example.ex1.androidhelicopterapplication.main.task2;
 
 import android.graphics.Canvas;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.example.ex1.androidhelicopterapplication.main.Main;
 
 import sheep.game.State;
 import sheep.game.World;
 
-public class Task2 extends State {
+public class Task2 extends State implements View.OnTouchListener{
 
     private World gameWorld;
     private GameLayer gameLayer;
@@ -16,7 +18,6 @@ public class Task2 extends State {
         this.gameWorld = new World();
         this.gameLayer = new GameLayer();
 
-        this.addTouchListener(gameLayer);
         this.gameWorld.addLayer(gameLayer);
     }
 
@@ -32,4 +33,16 @@ public class Task2 extends State {
         gameWorld.draw(canvas);
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        int eventAction = event.getActionMasked();
+        switch (eventAction) {
+            case MotionEvent.ACTION_DOWN:
+                gameLayer.onTouchDown(event);
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
 }

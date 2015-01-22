@@ -30,13 +30,12 @@ public class Main extends Activity {
         // Create the game.
         game = new Game(this, null);
         // Push the main state.
-        Task4Pong state = new Task4Pong();
-        game.pushState(state);
+        game.pushState(new Task1());
 
         // View the game.
         setContentView(game);
 
-        game.setOnTouchListener(state);
+
     }
 
 
@@ -61,14 +60,19 @@ public class Main extends Activity {
         }
         else if (id == R.id.task2) {
             game.popState();
-            game.pushState(new Task2());
+            Task2 state = new Task2();
+            game.pushState(state);
+            game.setOnTouchListener(state);
         }
         else if (id == R.id.task3) {
             game.popState();
             game.pushState(new Task3());
         }else if (id == R.id.pong) {
             game.popState();
-            game.pushState(new Task4Pong());
+            Task4Pong state = new Task4Pong();
+            game.pushState(state);
+            game.setOnTouchListener(state);
+
         }
 
         return super.onOptionsItemSelected(item);
